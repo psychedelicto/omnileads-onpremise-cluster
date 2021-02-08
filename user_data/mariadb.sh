@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mysql_username=wombat
+mysql_password=admin123
+
 echo "******************** prereq selinux and firewalld ***************************"
 echo "******************** prereq selinux and firewalld ***************************"
 systemctl disable firewalld
