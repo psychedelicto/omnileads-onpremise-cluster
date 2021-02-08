@@ -12,8 +12,8 @@ systemctl disable firewalld
 echo "******************** yum tasks ***************************"
 echo "******************** yum tasks ***************************"
 #yum update -y
-yum install -y https://yum.postgresql.org/11/redhat/rhel-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm  && yum install -y \
-postgresql11-server postgresql11 postgresql11-plperl postgresql11-contrib postgresql11-odbc vim
+rpm -Uvh https://yum.postgresql.org/11/redhat/rhel-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+yum install -y postgresql11-server postgresql11 postgresql11-plperl postgresql11-contrib postgresql11-odbc vim
 
 echo "******************** DB initialization ***************************"
 echo "******************** DB initialization ***************************"
