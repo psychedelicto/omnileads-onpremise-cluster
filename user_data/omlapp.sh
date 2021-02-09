@@ -158,4 +158,6 @@ cat > /etc/cron.d/MoverGrabaciones <<EOF
  */1 * * * * omnileads /opt/omnileads/bin/mover_audios.sh
 EOF
 
+#/opt/omnileads/bin/manage.py inicializar_entorno
+
 reboot
