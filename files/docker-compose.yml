@@ -8,7 +8,7 @@ services:
   networks:
    - oml_net
   image: redislabs/redisgears:latest
-  rivileged: true
+  privileged: true
   restart: on-failure
   stop_grace_period: 1m30s
   volumes:

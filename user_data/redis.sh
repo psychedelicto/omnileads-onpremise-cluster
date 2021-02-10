@@ -20,5 +20,5 @@ chmod +x ./files/install_docker.sh
 ./files/install_docker.sh
 fi
 
-cd $OMLDIR/redis
+cd $OMLDIR/$OMLCAMP
 docker-compose up -d
