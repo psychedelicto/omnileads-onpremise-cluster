@@ -11,14 +11,15 @@ cd omnileads-onpremise-cluster
 git checkout $RELEASE
 
 mkdir -p $OMLDIR/$OMLCOMP
-cp files/docker-compose.yml $OMLDIR
-cp files/redis-service /etc/systemd/system
+cp files/docker-compose.yml $OMLDIR/$OMLCOMP
+cp files/redis.service /etc/systemd/system
 
-if ["$INSTALL_DOCKER" == "TRUE"]
+if [[ "$INSTALL_DOCKER" == "TRUE" ]]
 then
 chmod +x ./files/install_docker.sh
-./files/install_docker.sh
+cd ./files
+sh install_docker.sh
 fi
 
-cd $OMLDIR/$OMLCAMP
+cd $OMLDIR/$OMLCOMP
 docker-compose up -d
