@@ -1,14 +1,15 @@
 #!/bin/bash
 
-PRIVATE_IPV4=192.168.95.205
+RELEASE=main
+OMLDIR=/opt/omnileads/
 
-systemctl disable netfilter-persistent.service
+git clone https://github.com/psychedelicto/omnileads-onpremise-cluster.git
+git checkout $RELEASE
+mkdir -p $OMLDIR
+cp files/docker-compose.yml $OMLDIR
+cp files/redis-service /etc/systemd/system
 
-apt update
-apt install redis-server -y
-
-sed -i "s/bind 127.0.0.1/bind "$PRIVATE_IPV4"/g" /etc/redis/redis.conf
-
-systemctl restart redis.service
+cd $OMLDIR/redis
+docker-compose up -d
 
 reboot

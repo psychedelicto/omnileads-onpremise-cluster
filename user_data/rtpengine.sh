@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PRIVATE_IPV4=192.168.95.203
+NIC=$1
+PRIVATE_IPV4=$(/sbin/ip -o -4 addr list $NIC | awk '{print $4}' | cut -d/ -f1)
 
 echo "************************* yum update and install kernel-devel ***********************************"
 echo "************************* yum update and install kernel-devel ***********************************"

@@ -1,7 +1,10 @@
 #!/bin/bash
 
-OMLPGSQLOMLAPPHOST=192.168.95.201/24
-OMLPGSQLOMLAPPPASS=admin123
+# $1 is the NIC you want to attach PostgreSQL
+# $2 is the PGSQL Pass for OMLApp connection
+
+OMLPGSQLOMLAPPHOST=$(/sbin/ip -o -4 addr list $1 | awk '{print $4}')
+OMLPGSQLOMLAPPPASS=$2
 
 echo "******************** prereq selinux and firewalld ***************************"
 echo "******************** prereq selinux and firewalld ***************************"

@@ -1,8 +1,12 @@
 #!/bin/bash
 
+# $1 is the NIC you want to attach OMLApp services
+
+NIC=$1
+
+PRIVATE_IPV4=$(/sbin/ip -o -4 addr list $NIC | awk '{print $4}' | cut -d/ -f1)
 HOST_DIR=/opt/omnileads/asterisk/var/spool/asterisk/monitor
-PRIVATE_IPV4=192.168.95.201
-omnileads_release=pre-release-1.13.0
+omnileads_release=master
 ami_user=omnileads
 ami_password=5_MeO_DMT
 dialer_host=dialer
@@ -14,15 +18,14 @@ pg_port=5432
 pg_database=omnileads
 pg_username=omnileads
 pg_password=admin123
+pg_default_database=postgres
 pg_default_user=postgres
 pg_default_password=admin123
-pg_default_database=omnileads
 redis_host=localhost
 rtpengine_host=rtpengine
 extern_ip=auto
 ecctl=3000
 sca=1800
-NIC=enp0s3
 TZ=America/Argentina/Cordoba
 #$nfs_recordings_ip=
 recording_ramdisk_size=200
