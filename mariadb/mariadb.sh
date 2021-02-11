@@ -16,5 +16,3 @@ systemctl enable mariadb
 echo "******************** postinstall configuration ***************************"
 echo "******************** postinstall configuration ***************************"
 mysql -e "GRANT ALL ON *.* to '$mysql_username'@'%' IDENTIFIED BY '$mysql_password' WITH GRANT OPTION;"
-
-reboot

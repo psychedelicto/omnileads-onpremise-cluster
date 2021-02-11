@@ -22,6 +22,6 @@ chmod +x ./mariadb/mariadb.sh
 sh ./mariadb/mariadb.sh $mysql_username $mysql_password
 fi
 cd $OMLCOMP
-sh dialer.sh $mysql_host $mysql_database $mysql_username $mysql_password
+sh user_data_dialer.sh $mysql_host $mysql_database $mysql_username $mysql_password
 
 reboot
