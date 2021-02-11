@@ -1,7 +1,7 @@
 #!/bin/bash
 
-OMLCOMP=dialer
 RELEASE=main
+OMLCOMP=dialer
 OMLDIR=/opt/omnileads/
 
 mysql_host=localhost
@@ -21,7 +21,7 @@ then
 chmod +x ./mariadb/mariadb.sh
 sh ./mariadb/mariadb.sh $mysql_username $mysql_password
 fi
-cd $OMLCOMP
-sh user_data_dialer.sh $mysql_host $mysql_database $mysql_username $mysql_password
+chmod +x ./dialer/files/dialer.sh
+sh ./dialer/files/dialer.sh $mysql_host $mysql_database $mysql_username $mysql_password
 
 reboot
