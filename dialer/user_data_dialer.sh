@@ -19,7 +19,7 @@ git checkout $RELEASE
 if [[ "$mysql_host" == "localhost" ]]
 then
 chmod +x ./mariadb/mariadb.sh
-sh ./mariadb/mariadb.sh $mysql_username $mysql_password
+sh ./mariadb/mariadb.sh $mysql_username $mysql_password localhost
 fi
 chmod +x ./dialer/files/dialer.sh
 sh ./dialer/files/dialer.sh $mysql_host $mysql_database $mysql_username $mysql_password
