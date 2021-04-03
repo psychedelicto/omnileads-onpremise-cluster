@@ -1,12 +1,10 @@
 #!/bin/bash
 
-RELEASE=develop
 SRC=/usr/src
 
 echo "************************ install ansible *************************"
 echo "************************ install ansible *************************"
 echo "************************ install ansible *************************"
-yum update -y
 yum install python3 python3-pip epel-release git ipcalc -y
 pip3 install pip --upgrade
 pip3 install 'ansible==2.9.2'
@@ -19,14 +17,13 @@ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
 sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 setenforce 0
 
-
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 cd $SRC && git clone https://gitlab.com/omnileads/omlpgsql.git
 cd omlpgsql
-git checkout $RELEASE
-cd ansible
+git checkout develop
+cd deploy
 
 echo "************************ config and install *************************"
 echo "************************ config and install *************************"
