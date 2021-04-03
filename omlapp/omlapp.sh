@@ -1,35 +1,39 @@
 #!/bin/bash
 
 NIC=$1 #NET Interface to attach services
-
+omnileads_release=$2  #OMniLeads release to deploy
 SRCPATH=/usr/src # Dir to download oml repo and extras
-omnileads_release="release-1.14.0"  #OMniLeads release to deploy
-TZ="America/Argentina/Cordoba"  #users Time Zone
-sca=1800 # Session cockie age
-ami_user=omnileadsami   #Asterisk AMI user
-ami_password=5_MeO_DMT  #Asterisk AMI pass
-dialer_user=demoadmin
-dialer_password=demo
-pg_database=omnileads #Postgres DB for OML
-pg_username=omnileads #Postgres username for OML
-pg_password=my_very_strong_pass #Postgres password for OML
 
 #######################################################################################
+# Some temporal deploy ENVVARS
+#######################################################################################
+
+# TZ="America/Argentina/Cordoba"  #users Time Zone
+# sca=1800 # Session cockie age
+# ami_user=omnileadsami   #Asterisk AMI user
+# ami_password=5_MeO_DMT  #Asterisk AMI pass
+# dialer_user=demoadmin
+# dialer_password=demo
+# pg_database=omnileads #Postgres DB for OML
+# pg_username=omnileads #Postgres username for OML
+# pg_password=my_very_strong_pass #Postgres password for OML
+
 # Cluster params
 # Set this params if you want to deploy some of this components in a dedicated host
-#######################################################################################
-#dialer_host=localhost #Wombat dialer host IPADDR
-#dialer_mysql_host=localhost #Wombat dialer DB host IPADDR
-#pg_host=localhost #Postgres host IPADDR
-#pg_port=5432 #Postgres tcp port
-#rtpengine_host=localhost #RTPengine host IPADDR
-#######################################################################################
+
+# DIALER_HOST=X.X.X.X #Wombat dialer host IPADDR
+# MYSQL_HOST=X.X.X.X #Wombat dialer DB host IPADDR
+# PG_HOST=X.X.X.X #Postgres host IPADDR
+# PG_PORT=XXXX #Postgres tcp port
+# RTPENGINE_HOST=X.X.X.X #RTPengine host IPADDR
+# KAMAILIO_HOST=X.X.X.X
+# ASTERISK_HOST=X.X.X.X
 
 echo "******************** fix hostname and localhost issue on some cloud instances ***************************"
 echo "******************** fix hostname and localhost issue on some cloud instances ***************************"
 TEMP_HOSTNAME=$(hostname)
-sed -i 's/127.0.0.1 '${TEMP_HOSTNAME}'/#127.0.0.1 '${TEMP_HOSTNAME}'/' /etc/hosts
-sed -i 's/::1 '${TEMP_HOSTNAME}'/#::1 '${TEMP_HOSTNAME}'/' /etc/hosts
+sed -i 's/127.0.0.1 '$TEMP_HOSTNAME'/#127.0.0.1 '$TEMP_HOSTNAME'/' /etc/hosts
+sed -i 's/::1 '$TEMP_HOSTNAME'/#::1 '$TEMP_HOSTNAME'/' /etc/hosts
 
 echo "******************** SElinux disable ***************************"
 echo "******************** SElinux disable ***************************"
@@ -67,18 +71,30 @@ python3 ansible/deploy/edit_inventory.py --self_hosted=yes \
   --postgres_password=$pg_password \
   --sca=$SCA \
   --schedule=$schedule \
-  --extern_ip=none
+  --extern_ip=none \
   --TZ=$TZ
-  #######################################################################################
-  # Cluster params
-  # Set this params if you want to deploy some of this components in a dedicated host
-  #######################################################################################
-  # \ --postgres_host=$pg_host \
-  #--postgres_port=$pg_port \
-  #--dialer_host=$dialer_host \
-  #--rtpengine_host=$rtpengine_host \
-  #--mysql_host=$dialer_mysql_host
-  #######################################################################################
+
+if [ $PG_HOST ]; then
+  sed -i "s/#postgres_host=/postgres_host=$PG_HOST/g" ansible/deploy/inventory
+fi
+if [ $DIALER_HOST ]; then
+  sed -i "s/#dialer_host=/dialer_host=$DIALER_HOST/g" ansible/deploy/inventory
+fi
+if [ $MYSQL_HOST ]; then
+  sed -i "s/#mysql_host=/mysql_host=$MYSQL_HOST/g" ansible/deploy/inventory
+fi
+if [ $RTPENGINE_HOST ]; then
+  sed -i "s/#rtpengine_host=/rtpengine_host=$RTPENGINE_HOST/g" ansible/deploy/inventory
+fi
+if [ $REDIS_HOST ]; then
+  sed -i "s/#redis_host=/redis_host=$REDIS_HOST/g" ansible/deploy/inventory
+fi
+if [ $KAMAILIO_HOST ]; then
+  sed -i "s/#kamailio_host=/kamailio_host=$KAMAILIO_HOST/g" ansible/deploy/inventory
+fi
+if [ $ASTERISK_HOST ]; then
+  sed -i "s/#asterisk_host=/asterisk_host=$ASTERISK_HOST/g" ansible/deploy/inventory
+fi
 
 echo "******************************** deploy.sh execution *******************************"
 echo "******************************** deploy.sh execution *******************************"
