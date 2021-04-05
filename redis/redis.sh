@@ -1,6 +1,5 @@
 #!/bin/bash
 
-RELEASE=$1
 SRC=/usr/src
 
 echo "************************ install ansible *************************"
