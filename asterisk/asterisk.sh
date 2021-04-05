@@ -25,8 +25,9 @@ pip3 install 'ansible==2.9.2'
 
 cd /usr/src
 git clone https://gitlab.com/omnileads/omlacd.git
+cd omlacd
 git checkout $RELEASE
-cd omlacd/deploy
+cd deploy
 
 echo "******************************************* config and install *****************************************"
 echo "******************************************* config and install *****************************************"
