@@ -1,6 +1,9 @@
 #!/bin/bash
 
-RELEASE=develop
+NIC_PRIVATE=$1
+NIC_PUBLIC=$2
+RELEASE=$3
+
 SRC=/usr/src
 
 echo "************************* yum update and install kernel-devel ***********************************"
@@ -15,8 +18,11 @@ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
 sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 setenforce 0
 
-# echo "************************* Discover IPs ***********************************"
-# echo "************************* Discover IPs ***********************************"
+echo "************************* Discover IPs ***********************************"
+echo "************************* Discover IPs ***********************************"
+echo "************************* Discover IPs ***********************************"
+PRIVATE_IPV4=$(ip addr show $NIC_PRIVATE | grep "inet\b" | awk '{print $2}')
+PUBLIC_IPV4=$(ip addr show $NIC_PUBLIC | grep "inet\b" | awk '{print $2}')
 # PUBLIC_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
 # PRIVATE_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address)
 
