@@ -32,11 +32,11 @@ cd deploy
 echo "******************************************* config and install *****************************************"
 echo "******************************************* config and install *****************************************"
 echo "******************************************* config and install *****************************************"
-sed -i "s/asterisk_hostname=asterisk/asterisk_hostname=$PRIVATE_IV4/g" ./inventory
-sed -i "s/kamailio_hostname=kamailio/kamailio_hostname=$KAMAILIO_HOST/g" ./inventory
-sed -i "s/redis_hostname=redis/redis_hostname=$REDIS_HOST/g" ./inventory
-sed -i "s/rtpengine_hostname=rtpengine/rtpengine_hostname=$RTPENGINE_HOST/g" ./inventory
-sed -i "s/postgres_hostname=postgres/postgres_hostname=$POSTGRESQL_HOST/g" ./inventory
+#sed -i "s/asterisk_hostname=asterisk/asterisk_hostname=$PRIVATE_IV4/g" ./inventory
+#sed -i "s/kamailio_hostname=kamailio/kamailio_hostname=$KAMAILIO_HOST/g" ./inventory
+#sed -i "s/redis_hostname=redis/redis_hostname=$REDIS_HOST/g" ./inventory
+#sed -i "s/rtpengine_hostname=rtpengine/rtpengine_hostname=$RTPENGINE_HOST/g" ./inventory
+#sed -i "s/postgres_hostname=postgres/postgres_hostname=$POSTGRESQL_HOST/g" ./inventory
 sed -i "s/postgres_port=5432/postgres_port=$POSTGRESQL_PORT/g" ./inventory
 sed -i "s/postgres_user=omnileads/postgres_user=$POSTGRESQL_OMLPASS/g" ./inventory
 sed -i "s/postgres_password=my_very_strong_pass/postgres_password=$POSTGRESQL_OMLPASS/g" ./inventory
