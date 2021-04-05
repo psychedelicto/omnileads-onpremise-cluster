@@ -59,6 +59,7 @@ cd ../rtpengine && git checkout develop
 cd ../nginx && git checkout develop
 cd ../redis && git checkout develop
 cd ../postgresql && git checkout develop
+cd ../websockets && git checkout develop
 cd ../..
 ##############################################
 
