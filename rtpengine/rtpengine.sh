@@ -1,7 +1,5 @@
 #!/bin/bash
 
-RELEASE=$1
-
 SRC=/usr/src
 
 echo "************************* yum update and install kernel-devel ***********************************"
