@@ -21,8 +21,8 @@ setenforce 0
 echo "************************* Discover IPs ***********************************"
 echo "************************* Discover IPs ***********************************"
 echo "************************* Discover IPs ***********************************"
-PRIVATE_IPV4=$(ip addr show $NIC_PRIVATE | grep "inet\b" | awk '{print $2}')
-PUBLIC_IPV4=$(ip addr show $NIC_PUBLIC | grep "inet\b" | awk '{print $2}')
+PRIVATE_IPV4=$(ip addr show $NIC_PRIVATE | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+PUBLIC_IPV4=$(ip addr show $NIC_PUBLIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 # PUBLIC_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
 # PRIVATE_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address)
 
