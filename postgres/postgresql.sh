@@ -1,5 +1,7 @@
 #!/bin/bash
 
+NIC=$1
+RELEASE=$2
 SRC=/usr/src
 
 echo "************************ install ansible *************************"
@@ -22,8 +24,15 @@ echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 cd $SRC && git clone https://gitlab.com/omnileads/omlpgsql.git
 cd omlpgsql
-git checkout develop
+git checkout $RELEASE
 cd deploy
+
+echo "************************* Discover IPs ***********************************"
+echo "************************* Discover IPs ***********************************"
+echo "************************* Discover IPs ***********************************"
+IPADDR_IPV4=$(ip addr show $NIC | grep "inet\b" | awk '{print $2}')
+NETADDR_IPV4=$(ipcalc -n $IPADDR_IPV4 |cut -d = -f 2)
+NETMASK_PREFIX=$(ip addr show $NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f2)
 
 echo "************************ config and install *************************"
 echo "************************ config and install *************************"
