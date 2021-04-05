@@ -1,10 +1,8 @@
 #!/bin/bash
 
-NIC_PRIVATE=$1
-RELEASE=$2
+RELEASE=$1
 
 SRC=/usr/src
-PRIVATE_IPV4=$(ip addr show $NIC_PRIVATE | grep "inet\b" | awk '{print $2' | cut -d/ -f1)
 
 echo "************************ install ansible *************************"
 echo "************************ install ansible *************************"
@@ -33,7 +31,7 @@ cd deploy
 echo "************************ config and install *************************"
 echo "************************ config and install *************************"
 echo "************************ config and install *************************"
-sed -i "s/asterisk_hostname=/asterisk_hostname=x.x.x.x/g" ./inventory
+sed -i "s/asterisk_hostname=/asterisk_hostname=$ASTERISK_HOST/g" ./inventory
 sed -i "s/kamailio_hostname=/kamailio_hostname=$PRIVATE_IPV4/g" ./inventory
 sed -i "s/redis_hostname=/redis_hostname=$REDIS_HOST/g" ./inventory
 sed -i "s/rtpengine_hostname=/rtpengine_hostname=$RTPENGINE_HOST/g" ./inventory
