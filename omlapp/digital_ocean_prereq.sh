@@ -35,7 +35,8 @@ export extern_ip=$PUBLIC_IPV4
 #export DIALER_HOST=
 #export MYSQL_HOST=
 
-chmod +x omlapp.sh
+#export RTPENGINE_HOST=
+chmod +x omlapp_install.sh
 ./omlapp_install.sh
 
 reboot
