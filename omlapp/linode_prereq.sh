@@ -38,9 +38,6 @@ export extern_ip=$PUBLIC_IPV4
 #export DIALER_HOST=
 #export MYSQL_HOST=
 
-yum install git -y
-
-yum install git -y
 chmod +x omlapp.sh
 ./omlapp_install.sh
 
