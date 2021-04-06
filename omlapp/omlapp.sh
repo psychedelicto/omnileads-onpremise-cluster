@@ -3,7 +3,7 @@
 SRCPATH=/usr/src # Dir to download oml repo and extras
 
 #######################################################################################
-# Some temporal deploy ENVVARS
+# Some temporal deploy ENVVARS you must SET 
 #######################################################################################
 
 # TZ="America/Argentina/Cordoba"  #users Time Zone

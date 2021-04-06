@@ -6,13 +6,11 @@ PRIVATE_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/private/0/i
 REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
 REPO_RELEASE=develop
 
-############### VULRT and OMNILEADS env settings #############################
-echo "******************** fix hostname and localhost issue on some cloud instances ***************************"
-echo "******************** fix hostname and localhost issue on some cloud instances ***************************"
+################## Digital Ocean and OMniLeads env settings ####################
 TEMP_HOSTNAME=$(hostname)
 sed -i 's/127.0.0.1 '$TEMP_HOSTNAME'/#127.0.0.1 '$TEMP_HOSTNAME'/' /etc/hosts
 sed -i 's/::1 '$TEMP_HOSTNAME'/#::1 '$TEMP_HOSTNAME'/' /etc/hosts
-###############################################################################
+################################################################################
 
 export NIC=eth1
 export RELEASE=release-1.14.0
