@@ -2,15 +2,12 @@
 
 NIC=enp0s3
 
-REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
-REPO_RELEASE=develop
-
 ############### CentOS-7 and OMNILEADS env settings #############################
 systemctl stop firewalld
 systemctl disable firewalld
 #################################################################################
 
-export NIC=eth1
+export NIC=$NIC
 export RELEASE=release-1.14.0
 
 export TZ="America/Argentina/Cordoba"
@@ -33,11 +30,7 @@ export extern_ip=none
 #export DIALER_HOST=
 #export MYSQL_HOST=
 
-yum install git -y
+chmod +x omlapp.sh
+./omlapp.sh
 
-cd /usr/src
-git clone $REPO_URL
-cd omnileads-onpremise-cluster
-git checkout $REPO_RELEASE
-chmod +x omlapp/omlapp.sh
-./omlapp/omlapp.sh
+reboot

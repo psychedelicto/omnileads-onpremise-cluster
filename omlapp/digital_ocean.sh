@@ -35,11 +35,7 @@ export extern_ip=$PUBLIC_IPV4
 #export DIALER_HOST=
 #export MYSQL_HOST=
 
-yum install git -y
+chmod +x omlapp.sh
+./omlapp.sh
 
-cd /usr/src
-git clone $REPO_URL
-cd omnileads-onpremise-cluster
-git checkout $REPO_RELEASE
-chmod +x omlapp/omlapp.sh
-./omlapp/omlapp.sh
+reboot

@@ -3,7 +3,7 @@
 SRCPATH=/usr/src # Dir to download oml repo and extras
 
 #######################################################################################
-# Some temporal deploy ENVVARS you must SET 
+# Some temporal deploy ENVVARS you must SET
 #######################################################################################
 
 # TZ="America/Argentina/Cordoba"  #users Time Zone
@@ -108,5 +108,3 @@ ln -s /usr/local/bin/sngrep /usr/bin/sngrep
 echo "********************************** setting demo environment *********************************"
 echo "********************************** setting demo environment *********************************"
 cd /opt/omnileads/bin && ./manage.sh inicializar_entorno
-
-reboot
