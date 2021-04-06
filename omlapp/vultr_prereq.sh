@@ -1,15 +1,18 @@
 #!/bin/bash
 
-PUBLIC_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
-PRIVATE_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address)
+PRIVATE_IPV4=$(ip addr show eth1 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+PUBLIC_IPV4=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 
 REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
 REPO_RELEASE=develop
 
-################## Digital Ocean and OMniLeads env settings ####################
+############### VULTR and OMniLeads env settings ###############################
 TEMP_HOSTNAME=$(hostname)
 sed -i 's/127.0.0.1 '$TEMP_HOSTNAME'/#127.0.0.1 '$TEMP_HOSTNAME'/' /etc/hosts
-sed -i 's/::1 '$TEMP_HOSTNAME'/#::1 '$TEMP_HOSTNAME'/' /etc/hosts
+sed -i 's/::1       '$TEMP_HOSTNAME'/#::1 '$TEMP_HOSTNAME'/' /etc/hosts
+
+systemctl stop firewalld
+systemctl disable firewalld
 ################################################################################
 
 export NIC=eth1
@@ -35,7 +38,10 @@ export extern_ip=$PUBLIC_IPV4
 #export DIALER_HOST=
 #export MYSQL_HOST=
 
+yum install git -y
+
+yum install git -y
 chmod +x omlapp.sh
-./omlapp.sh
+./omlapp_install.sh
 
 reboot

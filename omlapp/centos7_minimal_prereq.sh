@@ -31,6 +31,6 @@ export extern_ip=none
 #export MYSQL_HOST=
 
 chmod +x omlapp.sh
-./omlapp.sh
+./omlapp_install.sh
 
 reboot

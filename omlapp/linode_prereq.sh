@@ -1,21 +1,21 @@
 #!/bin/bash
 
+HOSTNAME=omlapp.example.com
+
 PRIVATE_IPV4=$(ip addr show eth1 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 PUBLIC_IPV4=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 
 REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
 REPO_RELEASE=develop
 
-############### VULTR and OMniLeads env settings ###############################
-TEMP_HOSTNAME=$(hostname)
-sed -i 's/127.0.0.1 '$TEMP_HOSTNAME'/#127.0.0.1 '$TEMP_HOSTNAME'/' /etc/hosts
-sed -i 's/::1       '$TEMP_HOSTNAME'/#::1 '$TEMP_HOSTNAME'/' /etc/hosts
+############### LINODE and OMniLeads env settings ##############################
+hostnamectl set-hostname "$HOSTNAME"
 
 systemctl stop firewalld
 systemctl disable firewalld
 ################################################################################
 
-export NIC=eth1
+export NIC=eth0
 export RELEASE=release-1.14.0
 
 export TZ="America/Argentina/Cordoba"
@@ -42,6 +42,6 @@ yum install git -y
 
 yum install git -y
 chmod +x omlapp.sh
-./omlapp.sh
+./omlapp_install.sh
 
 reboot
