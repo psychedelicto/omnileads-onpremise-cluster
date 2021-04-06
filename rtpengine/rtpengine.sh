@@ -21,10 +21,11 @@ git clone https://gitlab.com/omnileads/omlrtpengine.git
 cd omlrtpengine
 git checkout $RELEASE
 cd deploy
-ansible-playbook rtpengine.yml -i inventory --extra-vars "iface=eth0 rtpengine_version=$(cat ../.rtpengine_version)"
+ansible-playbook rtpengine.yml -i inventory --extra-vars "iface=$NIC rtpengine_version=$(cat ../.rtpengine_version)"
 
-echo "******************** Overwrite rtpengine.conf ***************************"
-echo "******************** Overwrite rtpengine.conf ***************************"
-  echo "OPTIONS="-i $PUBLIC_IPV4  -o 60 -a 3600 -d 30 -s 120 -n $PRIVATE_IPV4:22222 -m 20000 -M 50000 -L 7 --log-facility=local1""  > /etc/rtpengine-config.conf
+# echo "******************** Overwrite rtpengine.conf ***************************"
+# echo "******************** Overwrite rtpengine.conf ***************************"
+#
+# echo "OPTIONS="-i $PUBLIC_IPV4  -o 60 -a 3600 -d 30 -s 120 -n $PRIVATE_IPV4:22222 -m 20000 -M 50000 -L 7 --log-facility=local1""  > /etc/rtpengine-config.conf
 
 reboot
