@@ -2,7 +2,7 @@
 
 HOSTNAME=omlapp.example.com
 
-PRIVATE_IPV4=$(ip addr show eth1 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+PRIVATE_IPV4=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 PUBLIC_IPV4=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 
 REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
