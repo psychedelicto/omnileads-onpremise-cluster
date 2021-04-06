@@ -63,7 +63,7 @@ python3 ansible/deploy/edit_inventory.py --self_hosted=yes \
   --postgres_password=$pg_password \
   --sca=$SCA \
   --schedule=$schedule \
-  --extern_ip=none \
+  --extern_ip=$extern_ip \
   --TZ=$TZ
 
 if [ $PG_HOST ]; then

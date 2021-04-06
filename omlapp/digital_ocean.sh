@@ -1,5 +1,8 @@
 #!/bin/bash
 
+PUBLIC_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
+PRIVATE_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address)
+
 REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
 REPO_RELEASE=develop
 
@@ -23,6 +26,7 @@ export dialer_password=demo
 export pg_database=omnileads
 export pg_username=omnileads
 export pg_password=my_very_strong_pass
+export extern_ip=$PUBLIC_IPV4
 
 #export PG_HOST=
 #export PG_PORT=
