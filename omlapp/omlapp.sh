@@ -1,7 +1,5 @@
 #!/bin/bash
 
-NIC=$1 #NET Interface to attach services
-omnileads_release=$2  #OMniLeads release to deploy
 SRCPATH=/usr/src # Dir to download oml repo and extras
 
 #######################################################################################
