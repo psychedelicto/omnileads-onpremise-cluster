@@ -36,5 +36,5 @@ echo "************************ config and install *************************"
 
 ansible-playbook redis.yml -i inventory --extra-vars "redis_version=$(cat ../.redis_version) redisgears_version=$(cat ../.redisgears_version)"
 
-sed -i "s/#bind/'bind $PRIVATE_IPV4'/g" /etc/redis.conf
-sed -i "s/port 6379/'port $REDIS_PORT'/g" /etc/redis.conf
+sed -i "s/#bind/bind $PRIVATE_IPV4/g" /etc/redis.conf
+sed -i "s/port 6379/port $REDIS_PORT/g" /etc/redis.conf
