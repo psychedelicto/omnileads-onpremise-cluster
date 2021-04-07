@@ -1,5 +1,7 @@
 #!/bin/bash
 
+NIC=eth1
+
 REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
 REPO_RELEASE=onpre-001-oml-2-punto-0
 
