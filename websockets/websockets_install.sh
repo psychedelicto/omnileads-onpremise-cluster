@@ -6,8 +6,6 @@
 # NETMASK_PREFIX=$(ip addr show $NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f2)
 
 
-SRC=/usr/src
-
 echo "************************ install ansible *************************"
 echo "************************ install ansible *************************"
 echo "************************ install ansible *************************"
@@ -23,12 +21,19 @@ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
 sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 setenforce 0
 
+FIREWALLD=$(yum list installed |grep firewalld)
+if [ $FIREWALLD ]; then
+  systemctl stop firewalld
+  systemctl disable firewalld
+fi
+
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
-cd $SRC && git clone https://gitlab.com/omnileads/omnileads-websockets.git
+cd $SRC
+git clone $COMPONENT_RELEASE
 cd omnileads-websockets
-git checkout $RELEASE
+git checkout $COMPONENT_RELEASE
 cd deploy
 
 sed -i "s/redis_host=/redis_host=$REDIS_HOST/g" ./inventory
