@@ -36,7 +36,7 @@ yum -y install git
 git clone $REPO_URL
 cd omnileads-onpremise-cluster
 git checkout $REPO_RELEASE
-chmod +x redis/redis_install.sh
-./redis/redis_install.sh
+chmod +x omlapp/omlapp_install.sh
+./omlapp/omlapp_install.sh
 
 reboot

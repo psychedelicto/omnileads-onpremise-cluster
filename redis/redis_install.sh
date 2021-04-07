@@ -1,7 +1,5 @@
 #!/bin/bash
 
-SRC=/usr/src
-
 echo "************************ install ansible *************************"
 echo "************************ install ansible *************************"
 echo "************************ install ansible *************************"
@@ -17,16 +15,20 @@ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
 sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 setenforce 0
 
-systemctl stop firewalld
-systemctl disable firewalld
+FIREWALLD=$(yum list installed |grep firewalld)
+if [ $FIREWALLD ]; then
+  systemctl stop firewalld
+  systemctl disable firewalld
+fi
+
 
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 cd $SRC
-git clone https://gitlab.com/omnileads/omlredis.git
+git clone $REPO_URL
 cd omlredis
-git checkout $RELEASE
+git checkout $COMPONENT_RELEASE
 cd deploy
 
 echo "************************ config and install *************************"
@@ -34,3 +36,6 @@ echo "************************ config and install *************************"
 echo "************************ config and install *************************"
 
 ansible-playbook redis.yml -i inventory --extra-vars "redis_version=$(cat ../.redis_version) redisgears_version=$(cat ../.redisgears_version)"
+
+sed -i "s/#bind/bind $PRIVATE_IPV4/g" /etc/redis.conf
+sed -i "s/port 6379/port $REDIS_PORT/g" /etc/redis.conf
