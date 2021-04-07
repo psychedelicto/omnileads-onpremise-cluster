@@ -35,8 +35,11 @@ export extern_ip=$PUBLIC_IPV4
 #export DIALER_HOST=
 #export MYSQL_HOST=
 
-#export RTPENGINE_HOST=
-chmod +x omlapp_install.sh
-./omlapp_install.sh
+yum -y install git
+git clone $REPO_URL
+cd omnileads-onpremise-cluster
+git checkout $REPO_RELEASE
+chmod +x omlapp/omlapp_install.sh
+./omlapp/omlapp_install.sh
 
 reboot
