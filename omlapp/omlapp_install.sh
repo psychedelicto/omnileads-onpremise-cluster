@@ -52,16 +52,16 @@ cd ominicontacto && git checkout $omnileads_release
 git submodule init
 git submodule update
 
-##############################################
-cd modules/kamailio && git checkout develop
-cd ../asterisk && git checkout develop
-cd ../rtpengine && git checkout develop
-cd ../nginx && git checkout develop
-cd ../redis && git checkout develop
-cd ../postgresql && git checkout develop
-cd ../websockets && git checkout develop
-cd ../..
-##############################################
+# ##############################################
+# cd modules/kamailio && git checkout develop
+# cd ../asterisk && git checkout develop
+# cd ../rtpengine && git checkout develop
+# cd ../nginx && git checkout develop
+# cd ../redis && git checkout develop
+# cd ../postgresql && git checkout develop
+# cd ../websockets && git checkout develop
+# cd ../..
+# ##############################################
 
 echo "***************************** inventory setting *************************************"
 echo "***************************** inventory setting *************************************"
