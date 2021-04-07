@@ -26,7 +26,7 @@ echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 cd $SRC
-git clone $REPO_URL
+git clone $COMPONENT_REPO
 cd omlredis
 git checkout $COMPONENT_RELEASE
 cd deploy
