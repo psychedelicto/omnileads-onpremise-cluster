@@ -1,5 +1,7 @@
 #!/bin/bash
 
+REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
+REPO_RELEASE=onpre-001-oml-2-punto-0
 NIC=enp0s3
 
 ############### CentOS-7 and OMNILEADS env settings #############################
