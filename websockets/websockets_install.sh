@@ -11,7 +11,7 @@ SRC=/usr/src
 echo "************************ install ansible *************************"
 echo "************************ install ansible *************************"
 echo "************************ install ansible *************************"
-yum install python3 python3-pip epel-release git ipcalc -y
+yum install python3 python3-pip epel-release -y
 pip3 install pip --upgrade
 pip3 install 'ansible==2.9.2'
 export PATH="$HOME/.local/bin/:$PATH"

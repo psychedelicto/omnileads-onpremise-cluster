@@ -8,8 +8,9 @@ systemctl stop firewalld
 systemctl disable firewalld
 #################################################################################
 
-export REDIS_HOST=
-export REDIS_PORT=
+export RELEASE=develop
+export REDIS_HOST=192.168.95.201
+export REDIS_PORT=6379
 export WEBSOCKET_PORT=8000
 
 yum -y install git
