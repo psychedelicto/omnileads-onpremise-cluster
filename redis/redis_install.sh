@@ -17,6 +17,8 @@ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
 sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 setenforce 0
 
+systemctl stop firewalld
+systemctl disable firewalld
 
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
