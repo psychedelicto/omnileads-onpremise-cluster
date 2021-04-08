@@ -1,4 +1,4 @@
-<#!/bin/bash
+#!/bin/bash
 
 # You must set temporal ENVVARS PRIVATE_IPV4, NETADDR_IPV4 y NETMASK_PREFIX
 # IPADDR_IPV4=$(ip addr show $NIC | grep "inet\b" | awk '{print $2}')
