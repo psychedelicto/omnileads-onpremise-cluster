@@ -1,4 +1,4 @@
-#!/bin/bash
+<#!/bin/bash
 
 # You must set temporal ENVVARS PRIVATE_IPV4, NETADDR_IPV4 y NETMASK_PREFIX
 # IPADDR_IPV4=$(ip addr show $NIC | grep "inet\b" | awk '{print $2}')
@@ -31,7 +31,7 @@ echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 cd $SRC
-git clone $COMPONENT_RELEASE
+git clone $COMPONENT_REPO
 cd omnileads-websockets
 git checkout $COMPONENT_RELEASE
 cd deploy
