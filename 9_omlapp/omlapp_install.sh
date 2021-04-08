@@ -1,7 +1,5 @@
 #!/bin/bash
 
-SRCPATH=/usr/src # Dir to download oml repo and extras
-
 #######################################################################################
 # Some temporal deploy ENVVARS you must SET
 #######################################################################################
@@ -33,6 +31,12 @@ setenforce 0
 sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
 sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 
+FIREWALLD=$(yum list installed |grep firewalld)
+if [ $FIREWALLD ]; then
+  systemctl stop firewalld
+  systemctl disable firewalld
+fi
+
 echo "******************** yum update and install packages ***************************"
 echo "******************** yum update and install packages ***************************"
 yum -y update && yum -y install git python3-pip kernel-devel
@@ -45,23 +49,25 @@ pip3 install --user 'ansible==2.9.2'
 echo "***************************** git clone omnileads repo ******************************"
 echo "***************************** git clone omnileads repo ******************************"
 sleep 5
-cd $SRCPATH
-git clone https://gitlab.com/omnileads/ominicontacto.git
-cd ominicontacto && git checkout $omnileads_release
+cd $SRC
+git clone $COMPONENT_REPO
+cd ominicontacto && git checkout $COMPONENT_RELEASE
 
+if [ $OML_20 == "true" ]; then
 git submodule init
 git submodule update
 
 # ##############################################
-# cd modules/kamailio && git checkout develop
-# cd ../asterisk && git checkout develop
-# cd ../rtpengine && git checkout develop
-# cd ../nginx && git checkout develop
-# cd ../redis && git checkout develop
-# cd ../postgresql && git checkout develop
-# cd ../websockets && git checkout develop
-# cd ../..
+cd modules/kamailio && git checkout develop
+cd ../asterisk && git checkout develop
+cd ../rtpengine && git checkout develop
+cd ../nginx && git checkout develop
+cd ../redis && git checkout develop
+cd ../postgresql && git checkout develop
+cd ../websockets && git checkout develop
+cd ../..
 # ##############################################
+fi
 
 echo "***************************** inventory setting *************************************"
 echo "***************************** inventory setting *************************************"
@@ -101,6 +107,10 @@ fi
 if [ $ASTERISK_HOST ]; then
   sed -i "s/#asterisk_host=/asterisk_host=$ASTERISK_HOST/g" ansible/deploy/inventory
 fi
+if [ $WEBSOCKETS_HOST ]; then
+  sed -i "s/websocket_host=websockets/websocket_host=$WEBSOCKETS_HOST/g" ansible/deploy/inventory
+fi
+
 
 echo "******************************** deploy.sh execution *******************************"
 echo "******************************** deploy.sh execution *******************************"

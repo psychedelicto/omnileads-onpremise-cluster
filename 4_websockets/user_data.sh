@@ -17,3 +17,6 @@ cd omnileads-onpremise-cluster
 git checkout $REPO_RELEASE
 chmod +x 4_websockets/websockets_install.sh
 ./4_websockets/websockets_install.sh
+
+rm -rf $SRC/omnileads-onpremise-cluster
+rm -rf $SRC/omnileads-websockets

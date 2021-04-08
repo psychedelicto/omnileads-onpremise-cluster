@@ -2,16 +2,17 @@
 
 REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
 REPO_RELEASE=onpre-001-oml-2-punto-0
-NIC=enp0s3
 
 ############### CentOS-7 and OMNILEADS env settings #############################
 systemctl stop firewalld
 systemctl disable firewalld
 #################################################################################
 
-export NIC=$NIC
-export RELEASE=release-1.14.0
+export COMPONENT_REPO=https://gitlab.com/omnileads/ominicontacto.git
+export COMPONENT_RELEASE=master
+export SRC=/usr/src
 
+export NIC=enp0s3
 export TZ="America/Argentina/Cordoba"
 export sca=1800
 export ami_user=omnileadsami
@@ -23,6 +24,8 @@ export pg_username=omnileads
 export pg_password=my_very_strong_pass
 export extern_ip=none
 
+#export oml_20=true
+
 #export PG_HOST=
 #export PG_PORT=
 #export KAMAILIO_HOST=
@@ -31,6 +34,7 @@ export extern_ip=none
 #export REDIS_HOST=
 #export DIALER_HOST=
 #export MYSQL_HOST=
+#export WEBSOCKETS_HOST=
 
 yum -y install git
 git clone $REPO_URL
