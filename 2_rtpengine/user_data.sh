@@ -31,3 +31,6 @@ cd omnileads-onpremise-cluster
 git checkout $REPO_BRANCH
 chmod +x 2_rtpengine/rtpengine_install.sh
 ./2_rtpengine/rtpengine_install.sh
+
+rm -rf $SRC/omnileads-onpremise-cluster
+rm -rf $SRC/omlrtpengine
