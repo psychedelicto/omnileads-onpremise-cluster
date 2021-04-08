@@ -11,8 +11,8 @@ export REDIS_PORT=40722
 export COMPONENT_REPO=https://gitlab.com/omnileads/omlredis.git
 export COMPONENT_RELEASE=develop
 
-cd $SRC
 yum -y install git
+cd $SRC
 git clone $REPO_URL
 cd omnileads-onpremise-cluster
 git checkout $REPO_RELEASE

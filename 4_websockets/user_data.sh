@@ -12,6 +12,7 @@ export REDIS_PORT=6379
 export WEBSOCKET_PORT=8000
 
 yum -y install git
+cd $SRC
 git clone $REPO_URL
 cd omnileads-onpremise-cluster
 git checkout $REPO_RELEASE
