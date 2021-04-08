@@ -12,6 +12,8 @@ export COMPONENT_REPO=https://gitlab.com/omnileads/omlrtpengine.git
 export COMPONENT_RELEASE=develop
 export SRC=/usr/src
 
+yum -y install git curl
+
 ########################################## SCENARIO #######################################
 # You must to define your scenario to deploy RTPEngine
 # LAN if all agents work on LAN netwrok or VPN
@@ -31,7 +33,6 @@ export PUBLIC_IPV4=$(curl ifconfig.co)
 fi
 
 cd $SRC
-yum -y install git
 git clone $REPO_URL
 cd omnileads-onpremise-cluster
 git checkout $REPO_BRANCH
