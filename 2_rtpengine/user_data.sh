@@ -3,9 +3,10 @@
 REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
 REPO_BRANCH=onpre-001-oml-2-punto-0
 
-# if you have only one interface then use this in both fields (example eth0)
-PRIVATE_NIC=*****your_private_interface_network******
-PUBLIC_NIC=*****your_public_interface_network******
+# Set your net interfaces, you must have at least a PRIVATE_NIC
+# The public interface is not mandatory, if you don't have it, you can leave it blank
+PRIVATE_NIC=
+PUBLIC_NIC=
 
 export COMPONENT_REPO=https://gitlab.com/omnileads/omlrtpengine.git
 export COMPONENT_RELEASE=develop
@@ -22,7 +23,12 @@ export SCENARIO=LAN
 ###########################################################################################
 
 export PRIVATE_IPV4=$(ip addr show $PRIVATE_NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+
+if [ $PUBLIC_NIC ]; then
 export PUBLIC_IPV4=$(ip addr show $PUBLIC_NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+else
+export PUBLIC_IPV4=$(curl ifconfig.co)
+fi
 
 cd $SRC
 yum -y install git
