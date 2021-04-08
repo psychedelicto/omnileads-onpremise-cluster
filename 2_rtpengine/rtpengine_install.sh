@@ -1,7 +1,5 @@
 #!/bin/bash
 
-SRC=/usr/src
-
 echo "************************* yum update and install kernel-devel ***********************************"
 echo "************************* yum update and install kernel-devel ***********************************"
 yum update -y && yum install git python3-pip python3 -y
@@ -14,12 +12,18 @@ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
 sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 setenforce 0
 
+FIREWALLD=$(yum list installed |grep firewalld)
+if [ $FIREWALLD ]; then
+  systemctl stop firewalld
+  systemctl disable firewalld
+fi
+
 echo "******************** Install rtpengine ***************************"
 echo "******************** Install rtpengine ***************************"
 cd $SRC
-git clone https://gitlab.com/omnileads/omlrtpengine.git
+git clone $COMPONENT_REPO
 cd omlrtpengine
-git checkout $RELEASE
+git checkout $COMPONENT_RELEASE
 cd deploy
 ansible-playbook rtpengine.yml -i inventory --extra-vars "iface=$NIC rtpengine_version=$(cat ../.rtpengine_version)"
 
