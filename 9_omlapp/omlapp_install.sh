@@ -52,6 +52,7 @@ sleep 5
 cd $SRC
 git clone $COMPONENT_REPO
 cd ominicontacto && git checkout $COMPONENT_RELEASE
+git pull
 
 if [ "$OML_2" == "true" ]; then
 git submodule init
