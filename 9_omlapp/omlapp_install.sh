@@ -60,13 +60,13 @@ git submodule init
 git submodule update
 
 # ##############################################
-cd modules/kamailio && git checkout develop
-cd ../asterisk && git checkout develop
-cd ../rtpengine && git checkout develop
-cd ../nginx && git checkout develop
-cd ../redis && git checkout develop
-cd ../postgresql && git checkout develop
-cd ../websockets && git checkout develop
+cd modules/kamailio && git checkout $KAMAILIO_BRANCH
+cd ../asterisk && git checkout $ASTERISK_BRANCH
+cd ../rtpengine && git checkout $RTPENGINE_BRANCH
+cd ../nginx && git checkout $NGINX_BRANCH
+cd ../redis && git checkout $REDIS_BRANCH
+cd ../postgresql && git checkout $POSTGRES_BRANCH
+cd ../websockets && git checkout $WEBSOCKET_BRANCH
 cd ../..
 # ##############################################
 fi

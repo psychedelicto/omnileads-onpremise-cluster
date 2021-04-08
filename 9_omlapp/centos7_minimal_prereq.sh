@@ -24,8 +24,6 @@ export pg_username=omnileads
 export pg_password=my_very_strong_pass
 export extern_ip=none
 
-#export OML_2=true
-
 #export PG_HOST=
 #export PG_PORT=
 #export KAMAILIO_HOST=
@@ -37,6 +35,18 @@ export extern_ip=none
 #export WEBSOCKET_HOST=
 
 #export ENVIRONMENT_INIT=true
+
+################## UNCOMMENT only if you work with OML-2.0 #####################
+#export OML_2=true
+
+#export KAMAILIO_BRANCH=develop
+#export ASTERISK_BRANCH=develop
+#export RTPENGINE_BRANCH=develop
+#export NGINX_BRANCH=develop
+#export REDIS_BRANCH=develop
+#export POSTGRES_BRANCH=develop
+#export WEBSOCKET_BRANCH=develop
+################################################################################
 
 yum -y install git
 git clone $REPO_URL
