@@ -14,7 +14,7 @@ export SRC=/usr/src
 export PRIVATE_IPV4=$(ip addr show $PRIVATE_NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 export PUBLIC_IPV4=$(ip addr show $PUBLIC_NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 
-export extern_ip=none
+export EXTERN_IP=none
 
 cd $SRC
 yum -y install git
