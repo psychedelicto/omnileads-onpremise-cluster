@@ -24,7 +24,7 @@ export pg_username=omnileads
 export pg_password=my_very_strong_pass
 export extern_ip=none
 
-#export oml_20=true
+#export OML_2=true
 
 #export PG_HOST=
 #export PG_PORT=
@@ -34,7 +34,9 @@ export extern_ip=none
 #export REDIS_HOST=
 #export DIALER_HOST=
 #export MYSQL_HOST=
-#export WEBSOCKETS_HOST=
+#export WEBSOCKET_HOST=
+
+#export ENVIRONMENT_INIT=true
 
 yum -y install git
 git clone $REPO_URL
@@ -43,4 +45,4 @@ git checkout $REPO_RELEASE
 chmod +x omlapp/omlapp_install.sh
 ./omlapp/omlapp_install.sh
 
-reboot
+rm -rf $SRC/omnileads-onpremise-cluster

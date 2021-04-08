@@ -53,7 +53,7 @@ cd $SRC
 git clone $COMPONENT_REPO
 cd ominicontacto && git checkout $COMPONENT_RELEASE
 
-if [ $OML_20 == "true" ]; then
+if [ $OML_2 == "true" ]; then
 git submodule init
 git submodule update
 
@@ -107,8 +107,8 @@ fi
 if [ $ASTERISK_HOST ]; then
   sed -i "s/#asterisk_host=/asterisk_host=$ASTERISK_HOST/g" ansible/deploy/inventory
 fi
-if [ $WEBSOCKETS_HOST ]; then
-  sed -i "s/websocket_host=websockets/websocket_host=$WEBSOCKETS_HOST/g" ansible/deploy/inventory
+if [ $WEBSOCKET_HOST ]; then
+  sed -i "s/websocket_host=websockets/websocket_host=$WEBSOCKET_HOST/g" ansible/deploy/inventory
 fi
 
 
@@ -131,4 +131,6 @@ ln -s /usr/local/bin/sngrep /usr/bin/sngrep
 
 echo "********************************** setting demo environment *********************************"
 echo "********************************** setting demo environment *********************************"
-cd /opt/omnileads/bin && ./manage.sh inicializar_entorno
+if [ $ENVIRONMENT_INIT ]; then
+  cd /opt/omnileads/bin && ./manage.sh inicializar_entorno
+fi
