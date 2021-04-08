@@ -42,7 +42,7 @@ yum -y install git
 git clone $REPO_URL
 cd omnileads-onpremise-cluster
 git checkout $REPO_RELEASE
-chmod +x omlapp/omlapp_install.sh
-./omlapp/omlapp_install.sh
+chmod +x 9_omlapp/omlapp_install.sh
+./9_omlapp/omlapp_install.sh
 
 rm -rf $SRC/omnileads-onpremise-cluster

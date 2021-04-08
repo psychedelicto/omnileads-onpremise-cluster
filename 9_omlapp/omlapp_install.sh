@@ -53,7 +53,7 @@ cd $SRC
 git clone $COMPONENT_REPO
 cd ominicontacto && git checkout $COMPONENT_RELEASE
 
-if [ $OML_2 == "true" ]; then
+if [ "$OML_2" == "true" ]; then
 git submodule init
 git submodule update
 
