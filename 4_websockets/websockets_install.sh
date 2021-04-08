@@ -36,6 +36,8 @@ cd omnileads-websockets
 git checkout $COMPONENT_RELEASE
 cd deploy
 
+echo "******************** Install websocket ***************************"
+echo "******************** Install websocket ***************************"
 sed -i "s/redis_host=/redis_host=$REDIS_HOST/g" ./inventory
 sed -i "s/redis_port=/redis_port=$REDIS_PORT/g" ./inventory
 sed -i "s/websocket_port=8000/websocket_port=$WEBSOCKET_PORT/g" ./inventory
