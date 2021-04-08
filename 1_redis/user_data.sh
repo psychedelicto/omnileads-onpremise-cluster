@@ -18,3 +18,6 @@ cd omnileads-onpremise-cluster
 git checkout $REPO_RELEASE
 chmod +x 1_redis/redis_install.sh
 ./1_redis/redis_install.sh
+
+rm -rf $SRC/omnileads-onpremise-cluster
+rm -rf $SRC/omlrtpengine

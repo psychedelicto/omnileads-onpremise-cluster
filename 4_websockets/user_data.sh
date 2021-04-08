@@ -15,7 +15,5 @@ yum -y install git
 git clone $REPO_URL
 cd omnileads-onpremise-cluster
 git checkout $REPO_RELEASE
-chmod +x websockets/websockets_install.sh
-./websockets/websockets_install.sh
-
-reboot
+chmod +x 4_websockets/websockets_install.sh
+./4_websockets/websockets_install.sh
