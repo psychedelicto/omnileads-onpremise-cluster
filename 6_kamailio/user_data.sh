@@ -5,7 +5,7 @@ REPO_RELEASE=onpre-001-oml-2-punto-0
 
 export SRC=/usr/src
 export COMPONENT_REPO=https://gitlab.com/omnileads/omlkamailio.git
-export COMPONENT_RELEASE=develop
+export COMPONENT_RELEASE=omlkam-001-ajustes-fabi-temp
 
 export NIC=enp0s3
 export PRIVATE_IPV4=$(ip addr show $PRIVATE_NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
