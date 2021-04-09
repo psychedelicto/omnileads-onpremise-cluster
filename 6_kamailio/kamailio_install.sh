@@ -18,12 +18,15 @@ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
 sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 setenforce 0
 
+systemctl disable firewalld > /dev/null 2>&1
+
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
-cd $SRC && git clone https://gitlab.com/omnileads/omlkamailio.git
+cd $SRC
+git clone $COMPONENT_REPO
 cd omlkamailio
-git checkout $RELEASE
+git checkout $COMPONENT_RELEASE
 cd deploy
 
 echo "************************ config and install *************************"
