@@ -26,7 +26,7 @@ echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 cd $SRC
-git $COMPONENT_REPO
+git clone $COMPONENT_REPO
 cd omlpgsql
 git checkout $COMPONENT_RELEASE
 cd deploy
