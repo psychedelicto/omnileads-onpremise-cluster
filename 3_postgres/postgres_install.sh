@@ -25,7 +25,7 @@ systemctl disable firewalld > /dev/null 2>&1
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
-cd $SRC
+cd $SOURCE_DIR
 git clone $COMPONENT_REPO
 cd omlpgsql
 git checkout $COMPONENT_RELEASE
@@ -34,7 +34,7 @@ cd deploy
 echo "************************ config and install *************************"
 echo "************************ config and install *************************"
 echo "************************ config and install *************************"
-sed -i "s/postgres_database=my_database/postgres_database=$OML_DB_NAME/g" ./inventory
+sed -i "s/postgres_database=my_database/postgres_database=$OMLAPP_DB_NAME/g" ./inventory
 sed -i "s/postgres_user=my_user/postgres_user=$OMLAPP_USERNAME/g" ./inventory
 sed -i "s/postgres_password=my_very_strong_pass/postgres_password=$OMLAPP_PASSWORD/g" ./inventory
 sed -i "s/subnet=X.X.X.X\/XX/subnet=$NETADDR_IPV4\/$NETMASK_PREFIX/g" ./inventory

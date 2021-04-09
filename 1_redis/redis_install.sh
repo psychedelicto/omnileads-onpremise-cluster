@@ -33,8 +33,6 @@ cd deploy
 echo "************************ config and install *************************"
 echo "************************ config and install *************************"
 echo "************************ config and install *************************"
-sed -i "s/extern_ip=auto/extern_ip=$EXTERN_IP/g" ./inventory
-
 ansible-playbook redis.yml -i inventory --extra-vars "redis_version=$(cat ../.redis_version) redisgears_version=$(cat ../.redisgears_version)"
 
 sed -i "s/#bind/bind $PRIVATE_IPV4/g" /etc/redis.conf

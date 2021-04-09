@@ -8,9 +8,9 @@ export COMPONENT_RELEASE=develop
 
 export NIC=enp0s3
 export SOURCE_DIR=/usr/src
-export OML_DB_NAME=omnileads
-export OML_USERNAME=omnileads
-export OML_PASSWORD=my_very_strong_pass
+export OMLAPP_DB_NAME=omnileads
+export OMLAPP_USERNAME=omnileads
+export OMLAPP_PASSWORD=my_very_strong_pass
 
 yum install -y epel-release
 yum install -y git ipcalc
