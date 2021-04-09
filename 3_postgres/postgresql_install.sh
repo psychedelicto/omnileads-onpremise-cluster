@@ -5,9 +5,6 @@
 # NETADDR_IPV4=$(ipcalc -n $IPADDR_IPV4 |cut -d = -f 2)
 # NETMASK_PREFIX=$(ip addr show $NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f2)
 
-
-SRC=/usr/src
-
 echo "************************ install ansible *************************"
 echo "************************ install ansible *************************"
 echo "************************ install ansible *************************"
@@ -23,12 +20,15 @@ sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
 sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 setenforce 0
 
+systemctl disable firewalld > /dev/null 2>&1
+
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
 echo "************************ clone REPO *************************"
-cd $SRC && git clone https://gitlab.com/omnileads/omlpgsql.git
+cd $SRC
+git $COMPONENT_REPO
 cd omlpgsql
-git checkout $RELEASE
+git checkout $COMPONENT_RELEASE
 cd deploy
 
 echo "************************ config and install *************************"

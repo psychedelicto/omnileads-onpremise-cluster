@@ -2,8 +2,13 @@
 
 yum install epel-release git ipcalc -y
 
+REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
+REPO_BRANCH=onpre-001-oml-2-punto-0
+
 export NIC=eth0
-export RELEASE=develop
+export COMPONENT_REPO=https://gitlab.com/omnileads/omlrtpengine.git
+export COMPONENT_RELEASE=develop
+export SRC=/usr/src
 
 export OML_DB_NAME=omnileads
 export OML_USERNAME=omnileads

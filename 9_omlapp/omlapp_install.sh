@@ -59,7 +59,7 @@ if [ "$OML_2" == "true" ]; then
 git submodule init
 git submodule update
 
-# ##############################################
+#######################################################
 cd modules/kamailio && git checkout $KAMAILIO_BRANCH
 cd ../asterisk && git checkout $ASTERISK_BRANCH
 cd ../rtpengine && git checkout $RTPENGINE_BRANCH
@@ -68,7 +68,7 @@ cd ../redis && git checkout $REDIS_BRANCH
 cd ../postgresql && git checkout $POSTGRES_BRANCH
 cd ../websockets && git checkout $WEBSOCKET_BRANCH
 cd ../..
-# ##############################################
+#######################################################
 fi
 
 echo "***************************** inventory setting *************************************"

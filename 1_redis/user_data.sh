@@ -7,7 +7,7 @@ NIC=*****your_interface_network******
 
 export SRC=/usr/src
 export PRIVATE_IPV4=$(ip addr show $NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
-export REDIS_PORT=40722
+export REDIS_PORT=6379
 export COMPONENT_REPO=https://gitlab.com/omnileads/omlredis.git
 export COMPONENT_RELEASE=develop
 
