@@ -5,11 +5,18 @@ REPO_RELEASE=onpre-001-oml-2-punto-0
 
 export NIC=enp0s3
 export PRIVATE_IPV4=$(ip addr show $PRIVATE_NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
-export DIALER_HOST=192.168.95.215
 export DIALER_USER=wombat
 export DIALER_PASS=C11H15NO2
 
-yum -y install git
+yum install -y epel-release
+yum install -y git ipcalc
+
+IPADDR_MASK=$(ip addr show $NIC | grep "inet\b" | awk '{print $2}')
+NETADDR_IPV4=$(ipcalc -n $IPADDR_MASK |cut -d = -f 2)
+NETMASK_PREFIX=$(ipcalc -m $IPADDR_MASK |cut -d= -f2)
+
+export LAN_ADDRESS="$NETADDR_IPV4\/$NETMASK_PREFIX"
+
 cd $SRC
 git clone $REPO_URL
 cd omnileads-onpremise-cluster
