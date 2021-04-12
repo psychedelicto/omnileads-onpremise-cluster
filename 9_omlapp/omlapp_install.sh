@@ -25,24 +25,10 @@
 # KAMAILIO_HOST=X.X.X.X
 # ASTERISK_HOST=X.X.X.X
 
-echo "******************** SElinux disable ***************************"
-echo "******************** SElinux disable ***************************"
-setenforce 0
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
-
-FIREWALLD=$(yum list installed |grep firewalld)
-if [ $FIREWALLD ]; then
-  systemctl stop firewalld
-  systemctl disable firewalld
-fi
-
-echo "******************** yum update and install packages ***************************"
-echo "******************** yum update and install packages ***************************"
-yum -y update && yum -y install git python3-pip kernel-devel
 
 echo "******************** install ansible ***************************"
 echo "******************** install ansible ***************************"
+sleep 5
 pip3 install --upgrade pip
 pip3 install --user 'ansible==2.9.2'
 
@@ -121,18 +107,4 @@ cd ansible/deploy && ./deploy.sh -i --iface=$NIC
 if [ -d /usr/local/queuemetrics/ ]; then
   systemctl stop qm-tomcat6 && systemctl disable qm-tomcat6
   systemctl stop mariadb && systemctl disable mariadb
-fi
-
-echo "********************************** sngrep SIP sniffer install *********************************"
-echo "********************************** sngrep SIP sniffer install *********************************"
-yum install ncurses-devel make libpcap-devel pcre-devel \
-    openssl-devel git gcc autoconf automake -y
-cd /root && git clone https://github.com/irontec/sngrep
-cd sngrep && ./bootstrap.sh && ./configure && make && make install
-ln -s /usr/local/bin/sngrep /usr/bin/sngrep
-
-echo "********************************** setting demo environment *********************************"
-echo "********************************** setting demo environment *********************************"
-if [ $ENVIRONMENT_INIT ]; then
-  cd /opt/omnileads/bin && ./manage.sh inicializar_entorno
 fi

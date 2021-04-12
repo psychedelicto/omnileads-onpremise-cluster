@@ -3,11 +3,8 @@
 REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
 REPO_RELEASE=onpre-001-oml-2-punto-0
 
-############### CentOS-7 and OMNILEADS env settings #############################
-systemctl stop firewalld
-systemctl disable firewalld
-#################################################################################
-
+echo "******************** Set deploy variables ***************************"
+echo "******************** Set deploy variables ***************************"
 export COMPONENT_REPO=https://gitlab.com/omnileads/ominicontacto.git
 export COMPONENT_RELEASE=master
 export SRC=/usr/src
@@ -48,7 +45,22 @@ export extern_ip=none
 #export WEBSOCKET_BRANCH=develop
 ################################################################################
 
-yum -y install git
+
+echo "******************** SElinux and Firewalld disable ***************************"
+echo "******************** SElinux and Firewalld disable ***************************"
+setenforce 0
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+
+systemctl stop firewalld
+systemctl disable firewalld
+
+echo "******************** yum update and install packages ***************************"
+echo "******************** yum update and install packages ***************************"
+yum -y update && yum -y install git python3 python3-pip kernel-devel
+
+echo "******************** run component install ***************************"
+echo "******************** run component install ***************************"
 git clone $REPO_URL
 cd omnileads-onpremise-cluster
 git checkout $REPO_RELEASE
@@ -56,3 +68,17 @@ chmod +x 9_omlapp/omlapp_install.sh
 ./9_omlapp/omlapp_install.sh
 
 rm -rf $SRC/omnileads-onpremise-cluster
+
+echo "********************************** sngrep SIP sniffer install *********************************"
+echo "********************************** sngrep SIP sniffer install *********************************"
+yum install ncurses-devel make libpcap-devel pcre-devel \
+    openssl-devel git gcc autoconf automake -y
+cd /root && git clone https://github.com/irontec/sngrep
+cd sngrep && ./bootstrap.sh && ./configure && make && make install
+ln -s /usr/local/bin/sngrep /usr/bin/sngrep
+
+echo "********************************** setting demo environment *********************************"
+echo "********************************** setting demo environment *********************************"
+if [ "$ENVIRONMENT_INIT" == "true" ]; then
+  cd /opt/omnileads/bin && ./manage.sh inicializar_entorno
+fi

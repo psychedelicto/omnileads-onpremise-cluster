@@ -2,21 +2,8 @@
 
 echo "************************* yum update and install kernel-devel ***********************************"
 echo "************************* yum update and install kernel-devel ***********************************"
-yum update -y && yum install git python3-pip python3 kernel-devel -y
 pip3 install pip --upgrade
 pip3 install 'ansible==2.9.2'
-
-echo "******************** prereq selinux and firewalld ***************************"
-echo "******************** prereq selinux and firewalld ***************************"
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
-setenforce 0
-
-FIREWALLD=$(yum list installed |grep firewalld)
-if [ $FIREWALLD ]; then
-  systemctl stop firewalld
-  systemctl disable firewalld
-fi
 
 echo "******************** Install rtpengine ***************************"
 echo "******************** Install rtpengine ***************************"

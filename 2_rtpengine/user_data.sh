@@ -12,7 +12,7 @@ export COMPONENT_REPO=https://gitlab.com/omnileads/omlrtpengine.git
 export COMPONENT_RELEASE=develop
 export SRC=/usr/src
 
-yum -y install git curl
+yum update -y && yum -y install git python3-pip python3 kernel-devel curl
 
 ########################################## SCENARIO #######################################
 # You must to define your scenario to deploy RTPEngine
@@ -32,6 +32,16 @@ else
 export PUBLIC_IPV4=$(curl ifconfig.co)
 fi
 
+echo "******************** prereq selinux and firewalld ***************************"
+echo "******************** prereq selinux and firewalld ***************************"
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+setenforce 0
+systemctl disable firewalld > /dev/null 2>&1
+systemctl stop firewalld > /dev/null 2>&1
+
+echo "************************ Clone repo and run component install  *************************"
+echo "************************ Clone repo and run component install  *************************"
 cd $SRC
 git clone $REPO_URL
 cd omnileads-onpremise-cluster
@@ -39,5 +49,7 @@ git checkout $REPO_BRANCH
 chmod +x 2_rtpengine/rtpengine_install.sh
 ./2_rtpengine/rtpengine_install.sh
 
+echo "************************ Remove source dirs  *************************"
+echo "************************ Remove source dirs  *************************"
 rm -rf $SRC/omnileads-onpremise-cluster
 rm -rf $SRC/omlrtpengine
