@@ -1,7 +1,5 @@
 #!/bin/bash
 
-SRCPATH=/usr/src # Dir to download oml repo and extras
-
 #######################################################################################
 # Some temporal deploy ENVVARS you must SET
 #######################################################################################
@@ -27,27 +25,37 @@ SRCPATH=/usr/src # Dir to download oml repo and extras
 # KAMAILIO_HOST=X.X.X.X
 # ASTERISK_HOST=X.X.X.X
 
-echo "******************** SElinux disable ***************************"
-echo "******************** SElinux disable ***************************"
-setenforce 0
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
-
-echo "******************** yum update and install packages ***************************"
-echo "******************** yum update and install packages ***************************"
-yum -y update && yum -y install git python3-pip kernel-devel
 
 echo "******************** install ansible ***************************"
 echo "******************** install ansible ***************************"
+sleep 5
 pip3 install --upgrade pip
 pip3 install --user 'ansible==2.9.2'
 
 echo "***************************** git clone omnileads repo ******************************"
 echo "***************************** git clone omnileads repo ******************************"
 sleep 5
-cd $SRCPATH
-git clone https://gitlab.com/omnileads/ominicontacto.git
-cd ominicontacto && git checkout $omnileads_release
+cd $SRC
+git clone $COMPONENT_REPO
+cd ominicontacto
+git checkout $COMPONENT_RELEASE
+git pull
+
+if [ "$OML_2" == "true" ]; then
+git submodule init
+git submodule update
+
+#######################################################
+cd modules/kamailio && git checkout $KAMAILIO_BRANCH
+cd ../asterisk && git checkout $ASTERISK_BRANCH
+cd ../rtpengine && git checkout $RTPENGINE_BRANCH
+cd ../nginx && git checkout $NGINX_BRANCH
+cd ../redis && git checkout $REDIS_BRANCH
+cd ../postgresql && git checkout $POSTGRES_BRANCH
+cd ../websockets && git checkout $WEBSOCKET_BRANCH
+cd ../..
+#######################################################
+fi
 
 echo "***************************** inventory setting *************************************"
 echo "***************************** inventory setting *************************************"
@@ -87,6 +95,10 @@ fi
 if [ $ASTERISK_HOST ]; then
   sed -i "s/#asterisk_host=/asterisk_host=$ASTERISK_HOST/g" ansible/deploy/inventory
 fi
+if [ $WEBSOCKET_HOST ]; then
+  sed -i "s/websocket_host=websockets/websocket_host=$WEBSOCKET_HOST/g" ansible/deploy/inventory
+fi
+
 
 echo "******************************** deploy.sh execution *******************************"
 echo "******************************** deploy.sh execution *******************************"
@@ -96,15 +108,3 @@ if [ -d /usr/local/queuemetrics/ ]; then
   systemctl stop qm-tomcat6 && systemctl disable qm-tomcat6
   systemctl stop mariadb && systemctl disable mariadb
 fi
-
-echo "********************************** sngrep SIP sniffer install *********************************"
-echo "********************************** sngrep SIP sniffer install *********************************"
-yum install ncurses-devel make libpcap-devel pcre-devel \
-    openssl-devel git gcc autoconf automake -y
-cd /root && git clone https://github.com/irontec/sngrep
-cd sngrep && ./bootstrap.sh && ./configure && make && make install
-ln -s /usr/local/bin/sngrep /usr/bin/sngrep
-
-echo "********************************** setting demo environment *********************************"
-echo "********************************** setting demo environment *********************************"
-cd /opt/omnileads/bin && ./manage.sh inicializar_entorno

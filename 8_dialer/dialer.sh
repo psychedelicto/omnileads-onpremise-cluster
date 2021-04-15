@@ -1,20 +1,7 @@
 #!/bin/bash
 
-mysql_host=$1
-mysql_database=$2
-mysql_username=$3
-mysql_password=$4
-
-echo "******************** prereq selinux and firewalld ***************************"
-echo "******************** prereq selinux and firewalld ***************************"
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
-systemctl disable firewalld
-setenforce 0
-
 echo "******************** yum install wombat ***************************"
 echo "******************** yum install wombat ***************************"
-yum install wget -y
 wget -P /etc/yum.repos.d http://yum.loway.ch/loway.repo
 yum install wombat -y
 
@@ -24,7 +11,7 @@ cat > /usr/local/queuemetrics/tomcat/webapps/wombat/WEB-INF/tpf.properties <<EOF
 #LICENZA_ARCHITETTURA=....
 #START_TRANSACTION=qm_start
 JDBC_DRIVER=org.mariadb.jdbc.Driver
-JDBC_URL=jdbc:mariadb://$mysql_host/$mysql_database?user=$mysql_username&password=$mysql_password&autoReconnect=true
+JDBC_URL=jdbc:mariadb://$MYSQL_HOST/$MYSQL_DB?user=$MYSQL_USER&password=$MYSQL_PASS&autoReconnect=true
 #SMTP_HOST=my.host
 #SMTP_AUTH=true
 #SMTP_USER=xxxx
@@ -41,5 +28,3 @@ SMTP_DEBUG=yes
 pwd.defaultLevel=1
 pwd.minAllowedLevel=1
 EOF
-
-reboot
