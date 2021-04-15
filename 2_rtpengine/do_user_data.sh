@@ -1,7 +1,7 @@
 #!/bin/bash
 
 REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
-REPO_BRANCH=onpre-001-oml-2-punto-0
+REPO_BRANCH=develop
 
 export COMPONENT_REPO=https://gitlab.com/omnileads/omlrtpengine.git
 export COMPONENT_RELEASE=develop

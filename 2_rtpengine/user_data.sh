@@ -1,7 +1,7 @@
 #!/bin/bash
 
 REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
-REPO_BRANCH=onpre-001-oml-2-punto-0
+REPO_BRANCH=develop
 
 # Set your net interfaces, you must have at least a PRIVATE_NIC
 # The public interface is not mandatory, if you don't have it, you can leave it blank
