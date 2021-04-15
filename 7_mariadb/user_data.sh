@@ -5,11 +5,18 @@ REPO_RELEASE=onpre-001-oml-2-punto-0
 
 NIC=enp0s3
 
+echo "******************** prereq selinux and firewalld ***************************"
+echo "******************** prereq selinux and firewalld ***************************"
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+setenforce 0
+systemctl disable firewalld > /dev/null 2>&1
+systemctl stop firewalld > /dev/null 2>&1
+
 export DIALER_USER=wombat
 export DIALER_PASS=C11H15NO2
 
-yum install -y epel-release
-yum install -y git ipcalc
+yum install -y epel-release git ipcalc
 
 IPADDR_MASK=$(ip addr show $NIC | grep "inet\b" | awk '{print $2}')
 NETADDR_IPV4=$(ipcalc -n $IPADDR_MASK |cut -d = -f 2)

@@ -5,8 +5,7 @@ REPO_BRANCH=onpre-001-oml-2-punto-0
 
 # Set your net interfaces, you must have at least a PRIVATE_NIC
 # The public interface is not mandatory, if you don't have it, you can leave it blank
-PRIVATE_NIC=
-PUBLIC_NIC=
+NIC=eth0
 
 export COMPONENT_REPO=https://gitlab.com/omnileads/omlrtpengine.git
 export COMPONENT_RELEASE=develop
@@ -21,16 +20,11 @@ yum update -y && yum -y install git python3-pip python3 kernel-devel curl
 # HYBRID_1_NIC if some agents work on LAN and others from WAN and the host have ony 1 NIC
 # HYBRID_1_NIC if some agents work on LAN and others from WAN and the host have 2 NICs
 # (1 NIC for LAN IPADDR and 1 NIC for WAN IPADDR)
-export SCENARIO=LAN
+export SCENARIO=CLOUD
 ###########################################################################################
 
-export PRIVATE_IPV4=$(ip addr show $PRIVATE_NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
-
-if [ $PUBLIC_NIC ]; then
-  export PUBLIC_IPV4=$(ip addr show $PUBLIC_NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
-else
-  export PUBLIC_IPV4=$(curl ifconfig.co)
-fi
+export PRIVATE_IPV4=$(ip addr show $NIC |grep "inet 192.168" |awk '{print $2}' | cut -d/ -f1)
+export PUBLIC_IPV4=$(curl checkip.amazonaws.com)
 
 echo "******************** prereq selinux and firewalld ***************************"
 echo "******************** prereq selinux and firewalld ***************************"

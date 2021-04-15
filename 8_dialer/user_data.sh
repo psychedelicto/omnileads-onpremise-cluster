@@ -8,7 +8,16 @@ export MYSQL_DB=wombat
 export MYSQL_USER=wombat
 export MYSQL_PASS=C11H15NO2
 
-yum -y install git
+echo "******************** prereq selinux and firewalld ***************************"
+echo "******************** prereq selinux and firewalld ***************************"
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+setenforce 0
+systemctl disable firewalld > /dev/null 2>&1
+systemctl stop firewalld > /dev/null 2>&1
+
+
+yum -y install git wget
 cd $SRC
 git clone $REPO_URL
 cd omnileads-onpremise-cluster

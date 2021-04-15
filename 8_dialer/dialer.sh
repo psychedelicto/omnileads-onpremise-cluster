@@ -1,15 +1,7 @@
 #!/bin/bash
 
-echo "******************** prereq selinux and firewalld ***************************"
-echo "******************** prereq selinux and firewalld ***************************"
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
-systemctl disable firewalld
-setenforce 0
-
 echo "******************** yum install wombat ***************************"
 echo "******************** yum install wombat ***************************"
-yum install wget -y
 wget -P /etc/yum.repos.d http://yum.loway.ch/loway.repo
 yum install wombat -y
 
