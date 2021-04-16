@@ -7,7 +7,7 @@ REPO_URL=https://github.com/psychedelicto/omnileads-onpremise-cluster.git
 REPO_RELEASE=develop
 
 export COMPONENT_REPO=https://gitlab.com/omnileads/ominicontacto.git
-export COMPONENT_RELEASE=${omnileads_release}
+export COMPONENT_RELEASE=master
 export SRC=/usr/src
 
 export NIC=eth1
@@ -22,38 +22,20 @@ export pg_username=omnileads
 export pg_password=my_very_strong_pass
 export extern_ip=none
 
-if [[ "${pg_host}" != "NULL" ]]; then
-export PG_HOST=${pg_host}
-fi
-if [[ "${pg_port}" != "NULL" ]]; then
-export PG_PORT=${pg_port}
-fi
-if [[ "${kamailio_host}" != "NULL" ]]; then
-export KAMAILIO_HOST=${kamailio_host}
-fi
-if [[ "${rtpengine_host}" != "NULL" ]]; then
-export RTPENGINE_HOST=${rtpengine_host}
-fi
-if [[ "${asterisk_host}" != "NULL" ]]; then
-export ASTERISK_HOST=${asterisk_host}
-fi
-if [[ "${redis_host}" != "NULL" ]]; then
-export REDIS_HOST=${redis_host}
-fi
-if [[ "${dialer_host}" != "NULL" ]]; then
-export DIALER_HOST=${dialer_host}
-fi
-if [[ "${mysql_host}" != "NULL" ]]; then
-export MYSQL_HOST=${mysql_host}
-fi
-if [[ "${websocket_host}" != "NULL" ]]; then
-export WEBSOCKET_HOST=${websocket_host}
-fi
+# export PG_HOST=
+# export PG_PORT=
+# export KAMAILIO_HOST=
+# export RTPENGINE_HOST=
+# export ASTERISK_HOST=
+# export REDIS_HOST=
+# export DIALER_HOST=
+# export MYSQL_HOST=
+# export WEBSOCKET_HOST=
 
 export ENVIRONMENT_INIT=true
 
 ################## UNCOMMENT only if you work with OML-2.0 #####################
-if [[ "${omnileads_release}" == "oml-1777-epica-separacion-componentes-oml" ]]; then
+if [[ "$omnileads_release" == "oml-1777-epica-separacion-componentes-oml" ]]; then
   export OML_2=true
   export KAMAILIO_BRANCH=develop
   export ASTERISK_BRANCH=develop
@@ -90,5 +72,10 @@ chmod +x 9_omlapp/omlapp_install.sh
 ./9_omlapp/omlapp_install.sh
 
 rm -rf $SRC/omnileads-onpremise-cluster
+
+echo "******************************* agregados ***********************************************************"
+echo "******************************* agregados ***********************************************************"
+/opt/omnileads/bin/manage.sh inicializar_entorno
+echo "OPTIONS="-i $PUBLIC_IPV4  -o 60 -a 3600 -d 30 -s 120 -n 127.0.0.1:22222 -m 20000 -M 50000 -L 7 --log-facility=local1""  > /etc/rtpengine-config.conf
 
 reboot
