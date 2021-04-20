@@ -41,20 +41,18 @@ cd ominicontacto
 git checkout $COMPONENT_RELEASE
 git pull
 
-if [ "$OML_2" == "true" ]; then
-git submodule init
-git submodule update
+if [[ "$OML_2" == "true" ]]; then
+  git submodule init
+  git submodule update
 
-#######################################################
-cd modules/kamailio && git checkout $KAMAILIO_BRANCH
-cd ../asterisk && git checkout $ASTERISK_BRANCH
-cd ../rtpengine && git checkout $RTPENGINE_BRANCH
-cd ../nginx && git checkout $NGINX_BRANCH
-cd ../redis && git checkout $REDIS_BRANCH
-cd ../postgresql && git checkout $POSTGRES_BRANCH
-cd ../websockets && git checkout $WEBSOCKET_BRANCH
-cd ../..
-#######################################################
+  cd modules/kamailio && git checkout $KAMAILIO_BRANCH
+  cd ../asterisk && git checkout $ASTERISK_BRANCH
+  cd ../rtpengine && git checkout $RTPENGINE_BRANCH
+  cd ../nginx && git checkout $NGINX_BRANCH
+  cd ../redis && git checkout $REDIS_BRANCH
+  cd ../postgresql && git checkout $POSTGRES_BRANCH
+  cd ../websockets && git checkout $WEBSOCKET_BRANCH
+  cd ../..
 fi
 
 echo "***************************** inventory setting *************************************"
