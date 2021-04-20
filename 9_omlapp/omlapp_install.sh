@@ -58,7 +58,7 @@ fi
 echo "***************************** inventory setting *************************************"
 echo "***************************** inventory setting *************************************"
 sleep 5
-python3 ansible/deploy/edit_inventory.py --self_hosted=yes \
+python3 install/onpremise/deploy/ansible/edit_inventory.py --self_hosted=yes \
   --ami_user=$ami_user \
   --ami_password=$ami_password \
   --dialer_user=$dialer_user \
