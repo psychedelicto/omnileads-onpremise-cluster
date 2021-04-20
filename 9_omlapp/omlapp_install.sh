@@ -101,7 +101,7 @@ fi
 echo "******************************** deploy.sh execution *******************************"
 echo "******************************** deploy.sh execution *******************************"
 sleep 5
-cd ansible/deploy && ./deploy.sh -i --iface=$NIC
+cd install/onpremise/deploy/ansible && ./deploy.sh -i --iface=$NIC
 if [ -d /usr/local/queuemetrics/ ]; then
   systemctl stop qm-tomcat6 && systemctl disable qm-tomcat6
   systemctl stop mariadb && systemctl disable mariadb
