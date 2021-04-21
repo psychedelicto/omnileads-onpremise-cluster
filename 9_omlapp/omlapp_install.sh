@@ -25,6 +25,11 @@
 # KAMAILIO_HOST=X.X.X.X
 # ASTERISK_HOST=X.X.X.X
 
+if [[ "$OML_2" == "true" ]]; then
+  PATH_DEPLOY=install/onpremise/deploy/ansible
+else
+  PATH_DEPLOY=ansible/deploy
+fi
 
 echo "******************** install ansible ***************************"
 echo "******************** install ansible ***************************"
@@ -58,7 +63,7 @@ fi
 echo "***************************** inventory setting *************************************"
 echo "***************************** inventory setting *************************************"
 sleep 5
-python3 install/onpremise/deploy/ansible/edit_inventory.py --self_hosted=yes \
+python3 $PATH_DEPLOY/edit_inventory.py --self_hosted=yes \
   --ami_user=$ami_user \
   --ami_password=$ami_password \
   --dialer_user=$dialer_user \
@@ -73,40 +78,36 @@ python3 install/onpremise/deploy/ansible/edit_inventory.py --self_hosted=yes \
   --TZ=$TZ
 
 if [ $PG_HOST ]; then
-  sed -i "s/#postgres_host=/postgres_host=$PG_HOST/g" ansible/deploy/inventory
+  sed -i "s/#postgres_host=/postgres_host=$PG_HOST/g" $PATH_DEPLOY/inventory
 fi
 if [ $DIALER_HOST ]; then
-  sed -i "s/#dialer_host=/dialer_host=$DIALER_HOST/g" ansible/deploy/inventory
+  sed -i "s/#dialer_host=/dialer_host=$DIALER_HOST/g" $PATH_DEPLOY/inventory
 fi
 if [ $MYSQL_HOST ]; then
-  sed -i "s/#mysql_host=/mysql_host=$MYSQL_HOST/g" ansible/deploy/inventory
+  sed -i "s/#mysql_host=/mysql_host=$MYSQL_HOST/g" $PATH_DEPLOY/inventory
 fi
 if [ $RTPENGINE_HOST ]; then
-  sed -i "s/#rtpengine_host=/rtpengine_host=$RTPENGINE_HOST/g" ansible/deploy/inventory
+  sed -i "s/#rtpengine_host=/rtpengine_host=$RTPENGINE_HOST/g" $PATH_DEPLOY/inventory
 fi
 if [ $REDIS_HOST ]; then
-  sed -i "s/#redis_host=/redis_host=$REDIS_HOST/g" ansible/deploy/inventory
+  sed -i "s/#redis_host=/redis_host=$REDIS_HOST/g" $PATH_DEPLOY/inventory
 fi
 if [ $KAMAILIO_HOST ]; then
-  sed -i "s/#kamailio_host=/kamailio_host=$KAMAILIO_HOST/g" ansible/deploy/inventory
+  sed -i "s/#kamailio_host=/kamailio_host=$KAMAILIO_HOST/g" $PATH_DEPLOY/inventory
 fi
 if [ $ASTERISK_HOST ]; then
-  sed -i "s/#asterisk_host=/asterisk_host=$ASTERISK_HOST/g" ansible/deploy/inventory
+  sed -i "s/#asterisk_host=/asterisk_host=$ASTERISK_HOST/g" $PATH_DEPLOY/inventory
 fi
 if [ $WEBSOCKET_HOST ]; then
-  sed -i "s/websocket_host=websockets/websocket_host=$WEBSOCKET_HOST/g" ansible/deploy/inventory
+  sed -i "s/websocket_host=websockets/websocket_host=$WEBSOCKET_HOST/g" $PATH_DEPLOY/inventory
 fi
 
 
 echo "******************************** deploy.sh execution *******************************"
 echo "******************************** deploy.sh execution *******************************"
 sleep 5
-if [[ "$OML_2" == "true" ]]; then
-  cd install/onpremise/deploy/ansible
-else
-  cd ansible/deploy
-fi
 
+cd $PATH_DEPLOY
 ./deploy.sh -i --iface=$NIC
 
 if [ -d /usr/local/queuemetrics/ ]; then
