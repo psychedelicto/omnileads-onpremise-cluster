@@ -23,7 +23,7 @@ case $CLOUD in
     echo -n "DigitalOcean\n"
      PRIVATE_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address)
      NETMASK=$(curl -s http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/netmask)
-     NETADDR_IPV4=$(ipcalc -n $PRIVATE_IPV4 $PRIVATE_NETMASK |cut -d = -f 2)
+     NETADDR_IPV4=$(ipcalc -n $PRIVATE_IPV4 $NETMASK |cut -d = -f 2)
     ;;
   linode)
     echo -n "Linode"
