@@ -34,7 +34,7 @@ export extern_ip=none
 #export ENVIRONMENT_INIT=true
 
 ################## UNCOMMENT only if you work with OML-2.0 #####################
-if [[ "$omnileads_release" == "oml-1777-epica-separacion-componentes-oml" ]]; then
+if [[ "$COMPONENT_RELEASE" == "oml-1777-epica-separacion-componentes-oml" ]]; then
   export OML_2=true
   export KAMAILIO_BRANCH=develop
   export ASTERISK_BRANCH=develop

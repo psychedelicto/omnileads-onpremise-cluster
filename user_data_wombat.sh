@@ -1,9 +1,23 @@
 #!/bin/bash
 
+MYSQL_HOST=${mysql_host}
+MYSQL_DB=${mysql_database}
+MYSQL_USER=${mysql_username}
+MYSQL_PASS=${mysql_password}
+
+echo "******************** prereq selinux and firewalld ***************************"
+echo "******************** prereq selinux and firewalld ***************************"
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+setenforce 0
+systemctl disable firewalld > /dev/null 2>&1
+systemctl stop firewalld > /dev/null 2>&1
+
 echo "******************** yum install wombat ***************************"
 echo "******************** yum install wombat ***************************"
+yum -y install git wget
 wget -P /etc/yum.repos.d http://yum.loway.ch/loway.repo
-yum install wombat -y
+yum -y install wombat
 
 echo "******************** postinstall configuration ***************************"
 echo "******************** postinstall configuration ***************************"
