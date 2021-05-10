@@ -1,7 +1,7 @@
 #!/bin/bash
 
 COMPONENT_REPO=https://gitlab.com/omnileads/ominicontacto.git
-COMPONENT_RELEASE=develop
+COMPONENT_RELEASE=master
 SRC=/usr/src
 PATH_DEPLOY=install/onpremise/deploy/ansible
 
@@ -26,7 +26,11 @@ extern_ip=none
 
 PG_HOST=NULL
 PG_PORT=NULL
+
 RTPENGINE_HOST=NULL
+RTPENGINE_UDP_INI=20000
+RTPENGINE_UDP_END=30000
+
 REDIS_HOST=NULL
 DIALER_HOST=NULL
 MYSQL_HOST=NULL
@@ -42,6 +46,34 @@ NGINX_BRANCH=develop
 REDIS_BRANCH=develop
 POSTGRES_BRANCH=develop
 WEBSOCKET_BRANCH=develop
+
+
+echo "******************** IPV4 address config ***************************"
+echo "******************** IPV4 address config ***************************"
+case $CLOUD in
+  digitalocean)
+    echo -n "DigitalOcean"
+    export PUBLIC_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
+    export PRIVATE_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address)
+    ;;
+  linode)
+    echo -n "Linode"
+    export PRIVATE_IPV4=$(ip addr show $NIC |grep "inet 192.168" |awk '{print $2}' | cut -d/ -f1)
+    export PUBLIC_IPV4=$(curl checkip.amazonaws.com)
+    ;;
+  onpremise)
+    echo -n "Onpremise CentOS7 Minimal"
+    export PRIVATE_IPV4=$(ip addr show $PRIVATE_NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+    if [ $PUBLIC_NIC ]; then
+      export PUBLIC_IPV4=$(ip addr show $PUBLIC_NIC | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+    else
+      export PUBLIC_IPV4=$(curl ifconfig.co)
+    fi
+    ;;
+  *)
+    echo -n "you must to declare CLOUD variable"
+    ;;
+esac
 
 echo "******************** Cloud fix /etc/hosts ***************************"
 echo "******************** Cloud fix /etc/hosts ***************************"
@@ -152,4 +184,15 @@ echo "********************************** setting demo environment **************
 echo "********************************** setting demo environment *********************************"
 if [[ "$ENVIRONMENT_INIT" == "true" ]]; then
   /opt/omnileads/bin/manage.sh inicializar_entorno
+fi
+
+
+echo "********************************** Task if RTP run AIO *********************************"
+echo "********************************** Task if RTP run AIO *********************************"
+if [[ "$RTPENGINE_HOST" != "NULL" ]]; then
+
+  echo -n "CLOUD rtpengine"
+  echo "OPTIONS="-i $PUBLIC_IPV4 -o 60 -a 3600 -d 30 -s 120 -n localhost:22222 -m $RTPENGINE_UDP_INI -M $RTPENGINE_UDP_END -L 7 --log-facility=local1""  > /etc/rtpengine-config.conf
+
+  systemctl start rtpengine
 fi
