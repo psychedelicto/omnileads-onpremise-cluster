@@ -64,6 +64,14 @@ echo "******************** Restart rtpengine ***************************"
 echo "******************** Restart rtpengine ***************************"
 systemctl start asterisk
 
+echo "********************************** sngrep SIP sniffer install *********************************"
+echo "********************************** sngrep SIP sniffer install *********************************"
+yum install ncurses-devel make libpcap-devel pcre-devel \
+openssl-devel git gcc autoconf automake -y
+cd $SRC && git clone https://github.com/irontec/sngrep
+cd sngrep && ./bootstrap.sh && ./configure && make && make install
+ln -s /usr/local/bin/sngrep /usr/bin/sngrep
+
 echo "************************ Remove source dirs  *************************"
 echo "************************ Remove source dirs  *************************"
 echo "************************ Remove source dirs  *************************"

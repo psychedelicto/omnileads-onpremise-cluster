@@ -1,48 +1,48 @@
 #!/bin/bash
 
 COMPONENT_REPO=https://gitlab.com/omnileads/ominicontacto.git
-COMPONENT_RELEASE=master
+COMPONENT_RELEASE=develop
 SRC=/usr/src
+PATH_DEPLOY=install/onpremise/deploy/ansible
 
-CLOUD=******set your cloud environment******
-#CLOUD=digitalocean
+# Set your Cloud Provider
+CLOUD=digitalocean
 #CLOUD=onpremise
 #CLOUD=linode
 #CLOUD=vultr
 
-NIC=${NIC}
-TZ=${TZ}
-sca=${sca}
-ami_user=${ami_user}
-ami_password=${ami_password}
-dialer_user=${dialer_user}
-dialer_password=${dialer_password}
-pg_database=${pg_database}
-pg_username=${pg_username}
-pg_password=${pg_password}
+# Set the variable or user_data terraform parameter like ${TZ}
+NIC=eth1
+TZ=America/Argentina/Cordoba
+sca=1800
+ami_user=omnileadami
+ami_password=5_MeO_DMT
+dialer_user=demo
+dialer_password=demoadmin
+pg_database=omnileads
+pg_username=omnileads
+pg_password=098098ZZZ
 extern_ip=none
 
-PG_HOST=${pg_host}
-PG_PORT=${pg_port}
-RTPENGINE_HOST=${rtpengine_host}
-REDIS_HOST=${redis_host}
-DIALER_HOST=${dialer_host}
-MYSQL_HOST=${mysql_host}
+PG_HOST=NULL
+PG_PORT=NULL
+RTPENGINE_HOST=NULL
+REDIS_HOST=NULL
+DIALER_HOST=NULL
+MYSQL_HOST=NULL
+NGINX_HOST=NULL
+WEBSOCKET_HOST=NULL
 
-ENVIRONMENT_INIT=${ENV_INIT}
+ENVIRONMENT_INIT=true
 
-################## UNCOMMENT only if you work with OML-2.0 #####################
-if [[ "$COMPONENT_RELEASE" == "oml-1777-epica-separacion-componentes-oml" ]]; then
-  OML_2=true
-  KAMAILIO_BRANCH=develop
-  ASTERISK_BRANCH=develop
-  RTPENGINE_BRANCH=develop
-  NGINX_BRANCH=develop
-  REDIS_BRANCH=develop
-  POSTGRES_BRANCH=develop
-  WEBSOCKET_BRANCH=develop
-fi
-################################################################################
+KAMAILIO_BRANCH=develop
+ASTERISK_BRANCH=develop
+RTPENGINE_BRANCH=develop
+NGINX_BRANCH=develop
+REDIS_BRANCH=develop
+POSTGRES_BRANCH=develop
+WEBSOCKET_BRANCH=develop
+
 echo "******************** Cloud fix /etc/hosts ***************************"
 echo "******************** Cloud fix /etc/hosts ***************************"
 case $CLOUD in
@@ -93,32 +93,9 @@ ln -s /usr/local/bin/sngrep /usr/bin/sngrep
 
 echo "***************************** git clone omnileads repo ******************************"
 echo "***************************** git clone omnileads repo ******************************"
-if [[ "$OML_2" == "true" ]]; then
-  PATH_DEPLOY=install/onpremise/deploy/ansible
-else
-  PATH_DEPLOY=ansible/deploy
-fi
-
 cd $SRC
-git clone $COMPONENT_REPO
+git clone --recurse-submodules --branch $COMPONENT_RELEASE $COMPONENT_REPO
 cd ominicontacto
-git checkout $COMPONENT_RELEASE
-git pull
-
-if [[ "$OML_2" == "true" ]]; then
-  git submodule init
-  git submodule update
-
-  cd modules/kamailio && git checkout $KAMAILIO_BRANCH
-  cd ../asterisk && git checkout $ASTERISK_BRANCH
-  cd ../rtpengine && git checkout $RTPENGINE_BRANCH
-  cd ../nginx && git checkout $NGINX_BRANCH
-  cd ../redis && git checkout $REDIS_BRANCH
-  cd ../postgresql && git checkout $POSTGRES_BRANCH
-  cd ../websockets && git checkout $WEBSOCKET_BRANCH
-  cd ../..
-fi
-
 
 echo "***************************** inventory setting *************************************"
 echo "***************************** inventory setting *************************************"
@@ -137,7 +114,7 @@ python3 $PATH_DEPLOY/edit_inventory.py --self_hosted=yes \
   --extern_ip=$extern_ip \
   --TZ=$TZ
 
-if [[ "$PG_HOST" != "NULL" ]]; then
+if [[ "$PG_HOST"  != "NULL" ]]; then
   sed -i "s/#postgres_host=/postgres_host=$PG_HOST/g" $PATH_DEPLOY/inventory
 fi
 if [[ "$DIALER_HOST" != "NULL" ]]; then
@@ -152,6 +129,12 @@ fi
 if [[ "$REDIS_HOST" != "NULL" ]]; then
   sed -i "s/#redis_host=/redis_host=$REDIS_HOST/g" $PATH_DEPLOY/inventory
 fi
+if [[ "$NGINX_HOST" != "NULL" ]]; then
+  sed -i "s/#nginx_host=/nginx_host=$NGINX_HOST/g" $PATH_DEPLOY/inventory
+fi
+if [[ "$WEBSOCKET_HOST" != "NULL" ]]; then
+  sed -i "s/#websocket_host=/websocket_host=$WEBSOCKET_HOST/g" $PATH_DEPLOY/inventory
+fi
 
 echo "******************************** deploy.sh execution *******************************"
 echo "******************************** deploy.sh execution *******************************"
@@ -165,9 +148,8 @@ if [ -d /usr/local/queuemetrics/ ]; then
   systemctl stop mariadb && systemctl disable mariadb
 fi
 
-
 echo "********************************** setting demo environment *********************************"
 echo "********************************** setting demo environment *********************************"
-if [[ "$ENVIRONMENT_INIT" != "NULL" ]]; then
+if [[ "$ENVIRONMENT_INIT" == "true" ]]; then
   /opt/omnileads/bin/manage.sh inicializar_entorno
 fi

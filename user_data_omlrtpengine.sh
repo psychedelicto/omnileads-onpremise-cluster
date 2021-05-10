@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CLOUD=******set your cloud environment******
+# Uncoment you CLOUD
 #CLOUD=digitalocean
 #CLOUD=onpremise
 #CLOUD=linode
@@ -65,8 +65,8 @@ esac
 
 echo "******************** prereq selinux and firewalld ***************************"
 echo "******************** prereq selinux and firewalld ***************************"
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux > /dev/null 2>&1
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config > /dev/null 2>&1
 setenforce 0
 systemctl disable firewalld > /dev/null 2>&1
 systemctl stop firewalld > /dev/null 2>&1

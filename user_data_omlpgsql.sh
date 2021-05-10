@@ -65,8 +65,8 @@ export PATH="$HOME/.local/bin/:$PATH"
 echo "************************ disable SElinux *************************"
 echo "************************ disable SElinux *************************"
 echo "************************ disable SElinux *************************"
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
-sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux > /dev/null 2>&1
+sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config > /dev/null 2>&1
 setenforce 0
 systemctl disable firewalld > /dev/null 2>&1
 systemctl stop firewalld > /dev/null 2>&1
